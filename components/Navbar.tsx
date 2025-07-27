@@ -20,7 +20,7 @@ export default function Navbar() {
   }
 
   const navItems = [
-    { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
+    { href: "/home", label: "Dashboard", icon: BarChart3 },
     { href: "/inventory", label: "Inventory", icon: Package },
     { href: "/sales", label: "Sales", icon: ShoppingCart },
   ]
