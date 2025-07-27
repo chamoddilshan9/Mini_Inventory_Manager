@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import bcrypt from "bcryptjs"
 
 const UserSchema = new mongoose.Schema({
   username: {
@@ -17,14 +16,16 @@ const UserSchema = new mongoose.Schema({
   },
 })
 
-UserSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next()
-  this.password = await bcrypt.hash(this.password, 12)
-  next()
-})
+// Remove hashing middleware
+// UserSchema.pre("save", async function (next) {
+//   if (!this.isModified("password")) return next()
+//   this.password = await bcrypt.hash(this.password, 12)
+//   next()
+// })
 
-UserSchema.methods.comparePassword = async function (password: string) {
-  return bcrypt.compare(password, this.password)
-}
+// Remove comparePassword method
+// UserSchema.methods.comparePassword = async function (password: string) {
+//   return bcrypt.compare(password, this.password)
+// }
 
 export default mongoose.models.User || mongoose.model("User", UserSchema)

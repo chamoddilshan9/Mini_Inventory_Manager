@@ -18,8 +18,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
 
-    const isValidPassword = await user.comparePassword(password)
-    if (!isValidPassword) {
+    // Replace this:
+    // const isValidPassword = await user.comparePassword(password)
+    // if (!isValidPassword) {
+    //   return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
+    // }
+
+    // With plain text password check:
+    if (password !== user.password) {
       return NextResponse.json({ error: "Invalid credentials" }, { status: 401 })
     }
 

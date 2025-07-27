@@ -15,31 +15,37 @@ export default function LoginPage() {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError("")
+  e.preventDefault()
+  setIsLoading(true)
+  setError("")
 
-    try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
-      })
+  try {
+    console.log("Submitting login:", { username, password })
 
-      if (response.ok) {
-        router.push("/dashboard")
-      } else {
-        const data = await response.json()
-        setError(data.error || "Login failed")
-      }
-    } catch (error) {
-      setError("Network error. Please try again.")
-    } finally {
-      setIsLoading(false)
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    })
+
+    console.log("Response status:", response.status)
+
+    if (response.ok) {
+      router.push("/home")
+    } else {
+      const data = await response.json()
+      console.log("Login error response:", data)
+      setError(data.error || "Login failed")
     }
+  } catch (error) {
+    console.error("Network error:", error)
+    setError("Network error. Please try again.")
+  } finally {
+    setIsLoading(false)
   }
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
